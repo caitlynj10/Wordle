@@ -32,38 +32,46 @@ public static String getRandomWord(){
 
 public String checkWord(String s){
     s.toLowerCase();
-    String wordAfterGuess = "";
+    char [] wordAfterGuess = new char[5];
+    char []  status = wordToGuess.toCharArray();
+
     for(int i = 0; i<s.length(); i++){
         Character c = s.charAt(i);
-        wordAfterGuess += checkLetter(c, i);
-    }
-    return wordAfterGuess;
-}
-
-public Character checkLetter(Character c, int ind){
-    Character afterCheck = ' ';
-    if(wordToGuess.indexOf(c) != -1){ //wordToGuess contains the letter
-        if(wordToGuess.charAt(ind) == c){ //the character at the specified index is the correct letter
-            afterCheck = Character.toUpperCase(c);
+        if(wordToGuess.charAt(i) == c){
+            wordAfterGuess[i] = Character.toUpperCase(c);
+            status[i] = '*';
         }
-        else if(wordToGuess.lastIndexOf(c) != wordToGuess.indexOf(c)){
-            afterCheck = '-';
+ 
+    }
 
+    
+    for(int j = 0; j< s.length(); j++){
+        Character c = s.charAt(j);
+        String statusString = new String(status);
+        if(wordToGuess.charAt(j) == c){
+            continue;
         }
         else{
-            afterCheck = Character.toLowerCase(c);
+            if(wordToGuess.indexOf(c) != -1){
+                if(statusString.indexOf(c) == -1){
+                    wordAfterGuess[j] = '-';
+                }
+                else{
+                    wordAfterGuess[j] = Character.toLowerCase(c);
+                    int index = statusString.indexOf(c);
+                    status[index] = '*';
+                }
+            }
+            else{
+                wordAfterGuess[j] = '-';
+            }
         }
-
+        
+        
     }
-    else{
-        afterCheck = '-';
-    }
-
-
-    return afterCheck;
+     
+    return new String(wordAfterGuess);
 }
-
-
 
 public boolean checkValidWord(String s){
     if(s.length() != 5 || !wordList.contains(s)){
@@ -72,6 +80,8 @@ public boolean checkValidWord(String s){
 
     return true;
 }
+
+
 
 public void playGame(){
     setRandomWord();
