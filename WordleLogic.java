@@ -7,11 +7,12 @@ class WordleGame{
 
 static ArrayList<String> wordList = new ArrayList<>();
 static String wordToGuess;
+static String guess;
 static boolean gameOver = false;
 static boolean wonGame = false;
 
-static void setRandomWord(){
-    try (Scanner fileScan = new Scanner(new File("words.txt"))) {
+static void setRandomWord(String securePath){
+    try (Scanner fileScan = new Scanner(new File(securePath))) {
         while(fileScan.hasNext()){
             wordList.add(fileScan.next());
         }
@@ -19,7 +20,6 @@ static void setRandomWord(){
         Random rand = new Random();
         int wordNum = rand.nextInt(numWords);
         wordToGuess = wordList.get(wordNum).toLowerCase();
-        fileScan.close();
     }catch(FileNotFoundException e){
         System.out.println("File is not found!");
     }
@@ -84,13 +84,13 @@ public boolean checkValidWord(String s){
 
 
 public void playGame(){
-    setRandomWord();
+    setRandomWord("words.txt");
     Scanner scan = new Scanner(System.in);
     System.out.println("What is your first guessed word");
     int guesses = 0;
     int guessesLeft = 6;
     while(gameOver == false){
-        String guess = scan.next();
+        guess = scan.next();
         if(!checkValidWord(guess)){
             System.out.println("This word is invalid. Guess a new word.");
         }
