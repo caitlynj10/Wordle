@@ -30,7 +30,7 @@ void draw(){
 }
 
 void drawGrid(){
-    strokeWeight(10);
+    
     stroke(173);
     line(0, 0, 400, 0);
     line(0, 0, 0, 480);
@@ -55,7 +55,7 @@ void drawLetters(){
             char c = GUESS.charAt(i);
             text(Character.toUpperCase(c), i*cellSize + cellSize/2, GUESSES*cellSize + cellSize/2);
             stroke(255);
-            strokeWeight(4);
+            strokeWeight(6);
             noFill();
             rect(i*cellSize, GUESSES*cellSize, cellSize, cellSize);
         }
@@ -105,10 +105,9 @@ void colorGuess(){
             }
             else{
 
-                fill(41);
+                fill(71);
 
             }
-            strokeWeight(2);
             rect(j*cellSize, i*cellSize, cellSize, cellSize);
             fill(255);
             text(Character.toUpperCase(g), j*cellSize + cellSize/2, i*cellSize + cellSize/2);
